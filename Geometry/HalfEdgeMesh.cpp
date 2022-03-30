@@ -26,14 +26,13 @@ bool HalfEdgeMesh::AddFace(const std::vector<glm::vec3>& verts) {
     auto [e3in, e3out] = AddHalfEdgePair(ind3, ind1);
 
     // Connect inner ring
-    //eventuellt e(p1).next = e(p3).prev
+    // eventuellt e(p1).next = e(p3).prev
     e(e1in).next = e2in;
     e(e1in).prev = e3in;
     e(e2in).next = e3in;
     e(e2in).prev = e1in;
     e(e3in).next = e1in;
     e(e3in).prev = e2in;
-    
 
     // Finally, create the face, don't forget to set the normal (which should be
     // normalized)
@@ -41,7 +40,7 @@ bool HalfEdgeMesh::AddFace(const std::vector<glm::vec3>& verts) {
     tri.edge = e1in;
     mFaces.push_back(tri);
     mFaces.back().normal = FaceNormal(mFaces.size() - 1);
-    // 
+    //
     // All half-edges share the same left face (previously added)
 
     // Optionally, track the (outer) boundary half-edges
@@ -95,7 +94,7 @@ std::pair<size_t, size_t> HalfEdgeMesh::AddHalfEdgePair(size_t v1, size_t v2) {
     HalfEdge edge1, edge2;
     edge1.pair = indx2;
     edge2.pair = indx1;
-    
+
     // Connect the edges to the verts
     edge1.vert = v1;
     edge2.vert = v2;
@@ -219,16 +218,15 @@ std::vector<size_t> HalfEdgeMesh::FindNeighborVertices(size_t vertexIndex) const
     size_t indx = v(vertexIndex).edge;
     EdgeIterator it = GetEdgeIterator(indx);
     const EdgeIterator ref = GetEdgeIterator(indx);
-    //iterate through all edges around v until back to pair
+    // iterate through all edges around v until back to pair
     do {
         it = it.Prev();
         oneRing.push_back(it.GetEdgeVertexIndex());
         it = it.Pair();
     } while (it != ref);
-    //Get vertice
-    //Add vertices to oneRing
+    // Get vertice
+    // Add vertices to oneRing
     return oneRing;
-    
 }
 
 /*! \lab1 Implement the FindNeighborFaces */
@@ -294,13 +292,13 @@ glm::vec3 HalfEdgeMesh::VertexNormal(size_t vertexIndex) const {
     auto neighbor_faces = FindNeighborFaces(vertexIndex);
     std::vector<glm::vec3> normals;
 
-    //get all the normals for faces around a vertex
+    // get all the normals for faces around a vertex
     for (const size_t face_index : neighbor_faces) {
         n += f(face_index).normal;
-       //normals.push_back(f(face_index).normal);
+        // normals.push_back(f(face_index).normal);
     };
 
-    return n;  /// neighbor_faces.size(); gives error FIX
+    return glm::normalize(n);  /// neighbor_faces.size(); gives error FIX
 }
 
 void HalfEdgeMesh::Initialize() {
