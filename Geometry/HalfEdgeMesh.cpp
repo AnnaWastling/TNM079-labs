@@ -21,29 +21,24 @@ bool HalfEdgeMesh::AddFace(const std::vector<glm::vec3>& verts) {
     const auto ind2 = AddVertex(verts.at(1));
     const auto ind3 = AddVertex(verts.at(2));
     // Add all half-edge pairs
-    auto [p1in, p2out] = AddHalfEdgePair(ind1, ind2);
-    auto [p2in, p3out] = AddHalfEdgePair(ind2, ind3);
-    auto [p3in, p1out] = AddHalfEdgePair(ind3, ind1);
+    auto [e1in, e1out] = AddHalfEdgePair(ind1, ind2);
+    auto [e2in, e2out] = AddHalfEdgePair(ind2, ind3);
+    auto [e3in, e3out] = AddHalfEdgePair(ind3, ind1);
 
     // Connect inner ring
     //eventuellt e(p1).next = e(p3).prev
-    e(p1in).next = p2in;
-    e(p1in).prev = p3in;
-    e(p2in).next = p3in;
-    e(p2in).prev = p1in;
-    e(p3in).next = p1in;
-    e(p3in).prev = p2in;
+    e(e1in).next = e2in;
+    e(e1in).prev = e3in;
+    e(e2in).next = e3in;
+    e(e2in).prev = e1in;
+    e(e3in).next = e1in;
+    e(e3in).prev = e2in;
     
-    e(p1out).next = p2out;
-    e(p1out).prev = p3out;
-    e(p2out).next = p3out;
-    e(p2out).prev = p1out;
-    e(p3out).next = p1out;
-    e(p3out).prev = p2out;
+
     // Finally, create the face, don't forget to set the normal (which should be
     // normalized)
     Face tri;
-    tri.edge = p1in;
+    tri.edge = e1in;
     mFaces.push_back(tri);
     mFaces.back().normal = FaceNormal(mFaces.size() - 1);
     // 
@@ -100,7 +95,7 @@ std::pair<size_t, size_t> HalfEdgeMesh::AddHalfEdgePair(size_t v1, size_t v2) {
     HalfEdge edge1, edge2;
     edge1.pair = indx2;
     edge2.pair = indx1;
-
+    
     // Connect the edges to the verts
     edge1.vert = v1;
     edge2.vert = v2;
@@ -219,10 +214,21 @@ void HalfEdgeMesh::Validate() {
 std::vector<size_t> HalfEdgeMesh::FindNeighborVertices(size_t vertexIndex) const {
     // Collected vertices, sorted counter clockwise!
     std::vector<size_t> oneRing;
-
     // Add your code here
 
+    size_t indx = v(vertexIndex).edge;
+    EdgeIterator it = GetEdgeIterator(indx);
+    const EdgeIterator ref = GetEdgeIterator(indx);
+    //iterate through all edges around v until back to pair
+    do {
+        it = it.Prev();
+        oneRing.push_back(it.GetEdgeVertexIndex());
+        it = it.Pair();
+    } while (it != ref);
+    //Get vertice
+    //Add vertices to oneRing
     return oneRing;
+    
 }
 
 /*! \lab1 Implement the FindNeighborFaces */
@@ -235,6 +241,17 @@ std::vector<size_t> HalfEdgeMesh::FindNeighborFaces(size_t vertexIndex) const {
     std::vector<size_t> foundFaces;
 
     // Add your code here
+
+    size_t indx = v(vertexIndex).edge;
+    EdgeIterator it = GetEdgeIterator(indx);
+    const EdgeIterator ref = GetEdgeIterator(indx);
+    // iterate through all edges around v until back to pair
+    do {
+        it = it.Prev();
+        foundFaces.push_back(it.GetEdgeFaceIndex());
+        it = it.Pair();
+    } while (it != ref);
+
     return foundFaces;
 }
 
@@ -274,7 +291,16 @@ glm::vec3 HalfEdgeMesh::VertexNormal(size_t vertexIndex) const {
     glm::vec3 n(0.0f, 0.0f, 0.0f);
 
     // Add your code here
-    return n;
+    auto neighbor_faces = FindNeighborFaces(vertexIndex);
+    std::vector<glm::vec3> normals;
+
+    //get all the normals for faces around a vertex
+    for (const size_t face_index : neighbor_faces) {
+        n += f(face_index).normal;
+       //normals.push_back(f(face_index).normal);
+    };
+
+    return n;  /// neighbor_faces.size(); gives error FIX
 }
 
 void HalfEdgeMesh::Initialize() {
