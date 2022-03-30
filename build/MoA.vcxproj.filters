@@ -1,0 +1,402 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\annwa917\TNM079-labs\Decimation\DecimationMesh.cpp">
+      <Filter>Decimation</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\annwa917\TNM079-labs\Decimation\QuadricDecimationMesh.cpp">
+      <Filter>Decimation</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\annwa917\TNM079-labs\Decimation\SimpleDecimationMesh.cpp">
+      <Filter>Decimation</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\annwa917\TNM079-labs\Fluid\FluidSolver.cpp">
+      <Filter>Fluid</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\annwa917\TNM079-labs\Geometry\HalfEdgeMesh.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\annwa917\TNM079-labs\Geometry\Mesh.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\annwa917\TNM079-labs\Geometry\SimpleMesh.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\annwa917\TNM079-labs\Geometry\LineStrip.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\annwa917\TNM079-labs\Geometry\Cube.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\annwa917\TNM079-labs\Geometry\Implicit.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\annwa917\TNM079-labs\Geometry\ImplicitMesh.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\annwa917\TNM079-labs\Geometry\Quadric.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\annwa917\TNM079-labs\Geometry\SignedDistanceSphere.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\annwa917\TNM079-labs\Geometry\Sphere.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\annwa917\TNM079-labs\Geometry\SphereFractal.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\annwa917\TNM079-labs\GUI\FrameMain.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\annwa917\TNM079-labs\GUI\GLAxis.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\annwa917\TNM079-labs\GUI\GLGridPlane.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\annwa917\TNM079-labs\GUI\GLObject.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\annwa917\TNM079-labs\GUI\GLViewer.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\annwa917\TNM079-labs\GUI\GUI.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\annwa917\TNM079-labs\GUI\ScalarCutPlane.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\annwa917\TNM079-labs\GUI\VectorCutPlane.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\annwa917\TNM079-labs\GUI\FluidVoxelCutPlane.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\annwa917\TNM079-labs\Levelset\LevelSet.cpp">
+      <Filter>Levelset</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\annwa917\TNM079-labs\Levelset\LevelSetGrid.cpp">
+      <Filter>Levelset</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\annwa917\TNM079-labs\Levelset\LevelSetOperator.cpp">
+      <Filter>Levelset</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\annwa917\TNM079-labs\Math\TrilinearInterpolator.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\annwa917\TNM079-labs\Subdivision\AdaptiveLoopSubdivisionMesh.cpp">
+      <Filter>Subdivision</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\annwa917\TNM079-labs\Subdivision\LoopSubdivisionMesh.cpp">
+      <Filter>Subdivision</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\annwa917\TNM079-labs\Subdivision\UniformCubicSpline.cpp">
+      <Filter>Subdivision</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\annwa917\TNM079-labs\Subdivision\UniformCubicSplineSubdivisionCurve.cpp">
+      <Filter>Subdivision</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\annwa917\TNM079-labs\Util\BlackWhiteColorMap.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\annwa917\TNM079-labs\Util\ColorMap.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\annwa917\TNM079-labs\Util\ColorMapFactory.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\annwa917\TNM079-labs\Util\GLObjectPlayback.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\annwa917\TNM079-labs\Util\GrayColorMap.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\annwa917\TNM079-labs\Util\GreenRedColorMap.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\annwa917\TNM079-labs\Util\Heap.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\annwa917\TNM079-labs\Util\HotColorMap.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\annwa917\TNM079-labs\Util\HSVColorMap.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\annwa917\TNM079-labs\Util\IsoContourColorMap.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\annwa917\TNM079-labs\Util\JetColorMap.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\annwa917\TNM079-labs\Util\MarchingCubes.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\annwa917\TNM079-labs\Util\ObjIO.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\annwa917\TNM079-labs\Util\trackball.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\annwa917\TNM079-labs\Util\Util.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\annwa917\TNM079-labs\Util\Console.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\annwa917\TNM079-labs\main.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Decimation\DecimationInterface.h">
+      <Filter>Decimation</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Decimation\DecimationMesh.h">
+      <Filter>Decimation</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Decimation\QuadricDecimationMesh.h">
+      <Filter>Decimation</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Decimation\SimpleDecimationMesh.h">
+      <Filter>Decimation</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Fluid\FluidSolver.h">
+      <Filter>Fluid</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Geometry\Geometry.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Geometry\HalfEdgeMesh.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Geometry\Mesh.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Geometry\SimpleMesh.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Geometry\LineStrip.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Geometry\Bbox.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Geometry\CSG.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Geometry\Cube.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Geometry\Implicit.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Geometry\ImplicitGradientField.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Geometry\ImplicitMesh.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Geometry\ImplicitValueField.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Geometry\Quadric.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Geometry\SignedDistanceSphere.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Geometry\Sphere.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Geometry\SphereFractal.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\GUI\FrameMain.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\GUI\GLAxis.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\GUI\GLCamera.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\GUI\GLGridPlane.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\GUI\GLObject.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\GUI\GLViewer.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\GUI\GUI.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\GUI\ScalarCutPlane.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\GUI\VectorCutPlane.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\GUI\FluidVoxelCutPlane.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Levelset\LevelSet.h">
+      <Filter>Levelset</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Levelset\LevelSetGrid.h">
+      <Filter>Levelset</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Levelset\LevelSetOperator.h">
+      <Filter>Levelset</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Levelset\OperatorAdvect.h">
+      <Filter>Levelset</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Levelset\OperatorDilateErode.h">
+      <Filter>Levelset</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Levelset\OperatorMeanCurvatureFlow.h">
+      <Filter>Levelset</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Levelset\OperatorMorph.h">
+      <Filter>Levelset</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Levelset\OperatorReinitialize.h">
+      <Filter>Levelset</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Math\ConjugateGradient.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Math\ConstantVectorField.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Math\Function3D.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Math\TrilinearInterpolator.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Math\Volume.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Math\VortexVectorField.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Subdivision\AdaptiveLoopSubdivisionMesh.h">
+      <Filter>Subdivision</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Subdivision\LoopSubdivisionMesh.h">
+      <Filter>Subdivision</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Subdivision\StrangeSubdivisionMesh.h">
+      <Filter>Subdivision</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Subdivision\Subdivision.h">
+      <Filter>Subdivision</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Subdivision\UniformCubicSpline.h">
+      <Filter>Subdivision</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Subdivision\UniformCubicSplineSubdivisionCurve.h">
+      <Filter>Subdivision</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Util\BitMask3D.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Util\BlackWhiteColorMap.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Util\ColorMap.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Util\ColorMapFactory.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Util\GLObjectPlayback.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Util\GrayColorMap.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Util\GreenRedColorMap.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Util\Heap.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Util\HotColorMap.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Util\HSVColorMap.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Util\Image.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Util\Image_Impl.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Util\IsoContourColorMap.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Util\JetColorMap.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Util\MarchingCubes.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Util\MarchingCubesTable.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Util\ObjIO.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Util\Stopwatch.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Util\trackball.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Util\Util.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Util\stb\stb_image_write.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\annwa917\TNM079-labs\Util\Console.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\annwa917\TNM079-labs\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Decimation">
+      <UniqueIdentifier>{5747282A-E26E-3D07-BCA0-BD8450609B36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fluid">
+      <UniqueIdentifier>{9B4FCD71-B934-3D5D-A774-52B43F4322AE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI">
+      <UniqueIdentifier>{40EAC00C-7569-38CA-A30D-39721F6038E7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Geometry">
+      <UniqueIdentifier>{9A5665E4-FD62-3D23-9244-B6FEF6AE0AD7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Levelset">
+      <UniqueIdentifier>{D8EEB752-066E-3527-AB7D-DC5A0691F798}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math">
+      <UniqueIdentifier>{AA6103C9-E83C-35F3-BBE5-C45CEEE58B2B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Subdivision">
+      <UniqueIdentifier>{CDE36F26-9F22-3894-90F5-1ACB39144051}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util">
+      <UniqueIdentifier>{030B78FA-A4A1-3D0F-8F22-5D1B1C51C423}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
