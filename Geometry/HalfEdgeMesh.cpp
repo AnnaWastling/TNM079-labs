@@ -17,14 +17,36 @@ bool HalfEdgeMesh::AddFace(const std::vector<glm::vec3>& verts) {
     std::cerr << "ADD TRIANGLE NOT IMPLEMENTED. ";
 
     // Add the vertices of the face/triangle
-
+    const auto ind1 = AddVertex(verts.at(0));
+    const auto ind2 = AddVertex(verts.at(1));
+    const auto ind3 = AddVertex(verts.at(2));
     // Add all half-edge pairs
+    auto [p1in, p2out] = AddHalfEdgePair(ind1, ind2);
+    auto [p2in, p3out] = AddHalfEdgePair(ind2, ind3);
+    auto [p3in, p1out] = AddHalfEdgePair(ind3, ind1);
 
     // Connect inner ring
-
+    //eventuellt e(p1).next = e(p3).prev
+    e(p1in).next = p2in;
+    e(p1in).prev = p3in;
+    e(p2in).next = p3in;
+    e(p2in).prev = p1in;
+    e(p3in).next = p1in;
+    e(p3in).prev = p2in;
+    
+    e(p1out).next = p2out;
+    e(p1out).prev = p3out;
+    e(p2out).next = p3out;
+    e(p2out).prev = p1out;
+    e(p3out).next = p1out;
+    e(p3out).prev = p2out;
     // Finally, create the face, don't forget to set the normal (which should be
     // normalized)
-
+    Face tri;
+    tri.edge = p1in;
+    mFaces.push_back(tri);
+    mFaces.back().normal = FaceNormal(mFaces.size() - 1);
+    // 
     // All half-edges share the same left face (previously added)
 
     // Optionally, track the (outer) boundary half-edges
