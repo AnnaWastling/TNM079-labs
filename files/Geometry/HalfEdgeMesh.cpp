@@ -428,7 +428,7 @@ float HalfEdgeMesh::Volume() const {
         glm::vec3 v3 = v(e(e1).prev).pos;
 
         area += float(0.5 * glm::length(glm::cross((v2 - v1), (v3 - v2))));
-        volume += glm::dot(((v1 + v2 + v3)/float(3)) , face_index.normal * Area()); 
+        volume += glm::dot(((v1 + v2 + v3) / float(3)), face_index.normal * area); 
     }
 
     std::cerr << "Volume calculation not implemented for half-edge mesh!\n";
