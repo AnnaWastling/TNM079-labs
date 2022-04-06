@@ -20,13 +20,13 @@ bool HalfEdgeMesh::AddFace(const std::vector<glm::vec3>& verts) {
     const auto ind1 = AddVertex(verts.at(0));
     const auto ind2 = AddVertex(verts.at(1));
     const auto ind3 = AddVertex(verts.at(2));
+
     // Add all half-edge pairs
     auto [e1in, e1out] = AddHalfEdgePair(ind1, ind2);
     auto [e2in, e2out] = AddHalfEdgePair(ind2, ind3);
     auto [e3in, e3out] = AddHalfEdgePair(ind3, ind1);
 
     // Connect inner ring
-
     e(e1in).next = e2in;
     e(e1in).prev = e3in;
     e(e2in).next = e3in;
@@ -34,15 +34,20 @@ bool HalfEdgeMesh::AddFace(const std::vector<glm::vec3>& verts) {
     e(e3in).next = e1in;
     e(e3in).prev = e2in;
     
-
     // Finally, create the face, don't forget to set the normal (which should be
     // normalized)
     Face tri;
     tri.edge = e1in;
     mFaces.push_back(tri);
-    mFaces.back().normal = FaceNormal(mFaces.size() - 1);
-    // 
+    //get index of tri
+    size_t f_index = mFaces.size() - 1;
+    //set normal of tri
+    f(f_index).normal = FaceNormal(f_index);
+
     // All half-edges share the same left face (previously added)
+    e(e1in).face = f_index;
+    e(e2in).face = f_index;
+    e(e3in).face = f_index;
 
     // Optionally, track the (outer) boundary half-edges
     // to represent non-closed surfaces
@@ -401,18 +406,17 @@ void HalfEdgeMesh::Update() {
 /*! \lab1 Implement the area */
 float HalfEdgeMesh::Area() const {
     float area = 0;
-
     // Add code here
     // the area of a mesh is the sum of the areas of each individual face.
      for (const auto face_index : mFaces) {
-         auto e1 = face_index.edge;
-         auto e2 = e(e1).next;
-         auto e3 = e(e1).prev;
-
+        HalfEdge e1 = e(face_index.edge);
+        HalfEdge e2 = e(e1.next);
+        HalfEdge e3 = e(e1.prev);
           // area of triangle is 1/2|(v1-v3)X(v2-v3)
-         area += float(0.5 * glm::length(glm::cross((v(e2).pos-v(e1).pos),(v(e3).pos-v(e2).pos))));
+         area += float(0.5 * glm::length(glm::cross((v(e2.vert).pos-v(e1.vert).pos),(v(e3.vert).pos-v(e2.vert).pos))));
     };
-    std::cerr << "Area calculation not implemented for half-edge mesh!\n";
+
+    //std::cerr << "Area calculation not implemented for half-edge mesh!\n";
     return area;
 }
 
@@ -422,17 +426,17 @@ float HalfEdgeMesh::Volume() const {
     float area = 0;
     // Add code here
     for (const auto face_index : mFaces) {
-        auto e1 = face_index.edge;
-        glm::vec3 v1 = v(e(e1).vert).pos;
-        glm::vec3 v2 = v(e(e1).next).pos;
-        glm::vec3 v3 = v(e(e1).prev).pos;
+        HalfEdge e1 = e(face_index.edge);
+        glm::vec3 v1 = v(e1.vert).pos;
+        glm::vec3 v2 = v(e(e1.next).vert).pos;
+        glm::vec3 v3 = v(e(e1.prev).vert).pos;
 
-        area += float(0.5 * glm::length(glm::cross((v2 - v1), (v3 - v2))));
-        volume += glm::dot(((v1 + v2 + v3) / float(3)), face_index.normal * area); 
+        area = 0.5f * glm::length(glm::cross((v2 - v1), (v3 - v2)));
+        volume += glm::dot(((v1 + v2 + v3) / 0.3f), face_index.normal * area); 
     }
 
     std::cerr << "Volume calculation not implemented for half-edge mesh!\n";
-    return volume/3.0;
+    return volume/3.0f;
 }
 
 /*! \lab1 Calculate the number of shells  */
