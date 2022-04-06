@@ -261,34 +261,34 @@ std::vector<size_t> HalfEdgeMesh::FindNeighborFaces(size_t vertexIndex) const {
 float HalfEdgeMesh::VertexCurvature(size_t vertexIndex) const {
     // Copy code from SimpleMesh or compute more accurate estimate
    /*********************copied from simplemesh********************/ 
-    //std::vector<size_t> oneRing = FindNeighborVertices(vertexIndex);
-    //assert(oneRing.size() != 0);
+    std::vector<size_t> oneRing = FindNeighborVertices(vertexIndex);
+    assert(oneRing.size() != 0);
 
-    //size_t curr, next;
-    //const glm::vec3& vi = mVerts.at(vertexIndex).pos;
-    //float angleSum = 0;
-    //float area = 0;
-    //for (size_t i = 0; i < oneRing.size(); i++) {
-    //    // connections
-    //    curr = oneRing.at(i);
-    //    if (i < oneRing.size() - 1)
-    //        next = oneRing.at(i + 1);
-    //    else
-    //        next = oneRing.front();
+    size_t curr, next;
+    const glm::vec3& vi = mVerts.at(vertexIndex).pos;
+    float angleSum = 0;
+    float area = 0;
+    for (size_t i = 0; i < oneRing.size(); i++) {
+        // connections
+        curr = oneRing.at(i);
+        if (i < oneRing.size() - 1)
+            next = oneRing.at(i + 1);
+        else
+            next = oneRing.front();
 
-    //    // find vertices in 1-ring according to figure 5 in lab text
-    //    // next - beta
-    //    const glm::vec3& nextPos = mVerts.at(next).pos;
-    //    const glm::vec3& vj = mVerts.at(curr).pos;
+        // find vertices in 1-ring according to figure 5 in lab text
+        // next - beta
+        const glm::vec3& nextPos = mVerts.at(next).pos;
+        const glm::vec3& vj = mVerts.at(curr).pos;
 
-    //    // compute angle and area
-    //    angleSum += acos(glm::dot(vj - vi, nextPos - vi) /
-    //                     (glm::length(vj - vi) * glm::length(nextPos - vi)));
-    //    area += glm::length(glm::cross(vi - vj, nextPos - vj)) * 0.5f;
-    //}
-    //return (2.0f * static_cast<float>(M_PI) - angleSum) / area;
+        // compute angle and area
+        angleSum += acos(glm::dot(vj - vi, nextPos - vi) /
+                         (glm::length(vj - vi) * glm::length(nextPos - vi)));
+        area += glm::length(glm::cross(vi - vj, nextPos - vj)) * 0.5f;
+    }
+    return (2.0f * static_cast<float>(M_PI) - angleSum) / area;
     /***********************************************************/
-    return 0;
+   // return 0;
 }
 
 float HalfEdgeMesh::FaceCurvature(size_t faceIndex) const {
@@ -432,7 +432,7 @@ float HalfEdgeMesh::Volume() const {
         glm::vec3 v3 = v(e(e1.prev).vert).pos;
 
         area = 0.5f * glm::length(glm::cross((v2 - v1), (v3 - v2)));
-        volume += glm::dot(((v1 + v2 + v3) / 0.3f), face_index.normal * area); 
+        volume += glm::dot(((v1 + v2 + v3) / 3.0f), face_index.normal * area); 
     }
 
     //std::cerr << "Volume calculation not implemented for half-edge mesh!\n";
