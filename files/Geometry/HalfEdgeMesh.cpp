@@ -435,7 +435,7 @@ float HalfEdgeMesh::Volume() const {
         volume += glm::dot(((v1 + v2 + v3) / 0.3f), face_index.normal * area); 
     }
 
-    std::cerr << "Volume calculation not implemented for half-edge mesh!\n";
+    //std::cerr << "Volume calculation not implemented for half-edge mesh!\n";
     return volume/3.0f;
 }
 
