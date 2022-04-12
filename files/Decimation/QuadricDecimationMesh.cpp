@@ -54,17 +54,17 @@ void QuadricDecimationMesh::computeCollapse(EdgeCollapse* collapse) {
     //error
     // A square matrix is singular(=invertible) if and only if its determinant is zero.
     float EPSILON = 0.0000000001f;
-    //if (glm::determinant(Qhat) =! EPSILON) {
-    //    glm::vec4 v = glm::inverse(Qhat)*zero;
-    //    collapse->position = v;
+    if (glm::determinant(Qhat) != EPSILON) {
+        glm::vec4 v = glm::inverse(Qhat)*zero;
+        collapse->position = v;
 
-    //    //error function
-    //    //multiply transposed vector with vector = dotproduct 
-    //    float deltaV = glm::dot(v, Qhat * v); 
-    //    collapse->cost = deltaV;
-    //} else {
-    //    collapse->position = glm::vec3((v1 + v2) / 2);
-    //}
+        //error function
+        //multiply transposed vector with vector = dotproduct 
+        float deltaV = glm::dot(v, Qhat * v); 
+        collapse->cost = deltaV;
+    } else {
+        collapse->position = glm::vec3((v1 + v2) / 2);
+    }
 
     std::cerr << "computeCollapse in QuadricDecimationMesh not implemented.\n";
 }
