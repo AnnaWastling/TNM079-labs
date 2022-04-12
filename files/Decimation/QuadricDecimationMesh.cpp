@@ -37,8 +37,12 @@ void QuadricDecimationMesh::Initialize() {
 void QuadricDecimationMesh::computeCollapse(EdgeCollapse* collapse) {
     // Compute collapse->position and collapse->cost here
     // based on the quadrics at the edge endpoints
-    auto v1 = e(collapse->halfEdge).vert;
-    auto v2 = e(e(collapse->halfEdge).next).vert;
+    size_t v1 = e(collapse->halfEdge).vert;
+    size_t v2 = e(e(collapse->halfEdge).next).vert;
+
+    glm::vec4 posV1(v(v1).pos, 1);
+    glm::vec4 posV2(v(v2).pos, 1);
+    glm::vec4 between((posV1 + posV2) / 2.0f);
 
     auto Q1 = createQuadricForVert(v1);
     auto Q2 = createQuadricForVert(v2);
@@ -50,23 +54,40 @@ void QuadricDecimationMesh::computeCollapse(EdgeCollapse* collapse) {
     Qhat[2][3] = 0.0f;
     Qhat[3][3] = 1.0f;
     glm::vec4 zero(0.0f, 0.0f, 0.0f, 1.0f);
-    
-    //error
+
     // A square matrix is singular(=invertible) if and only if its determinant is zero.
     float EPSILON = 0.0000000001f;
+
     if (glm::determinant(Qhat) != EPSILON) {
         glm::vec4 v = glm::inverse(Qhat)*zero;
         collapse->position = v;
-
         //error function
         //multiply transposed vector with vector = dotproduct 
         float deltaV = glm::dot(v, Qhat * v); 
         collapse->cost = deltaV;
-    } else {
-        collapse->position = glm::vec3((v1 + v2) / 2);
+
+    } 
+    else {
+        // compare costfunction for other 3 cases
+        float costV1 = glm::dot(posV1, Qhat * posV1);
+        float costV2 = glm::dot(posV2, Qhat * posV2);
+        float costBetween = glm::dot(between, Qhat * between);
+
+        //get the one with lowest cost
+        if (costV1 < costV2 && costV1 < costBetween) {
+            collapse->position = posV1;
+            collapse->cost = costV1; 
+        } else if (costV2 < costV1 && costV2 < costBetween) {
+            collapse->position = posV2;
+            collapse->cost = costV2; 
+        } else {
+            collapse->position = between;
+            collapse->cost = costBetween; 
+        }
+
     }
 
-    std::cerr << "computeCollapse in QuadricDecimationMesh not implemented.\n";
+    //std::cerr << "computeCollapse in QuadricDecimationMesh not implemented.\n";
 }
 
 /*! After each edge collapse the vertex properties need to be updated */
@@ -81,9 +102,11 @@ void QuadricDecimationMesh::updateVertexProperties(size_t ind) {
 glm::mat4 QuadricDecimationMesh::createQuadricForVert(size_t indx) const {
     glm::mat4 Q({0.0f, 0.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f, 0.0f},
                 {0.0f, 0.0f, 0.0f, 0.0f});
-    std::vector<size_t> V_planes = FindNeighborFaces(indx);
 
-    for (auto f_index : V_planes) {
+    std::vector<size_t> V_ring = FindNeighborFaces(indx);
+
+    for (auto f_index : V_ring) {
+
       Q += createQuadricForFace(f_index);
     }
     
@@ -102,7 +125,8 @@ glm::mat4 QuadricDecimationMesh::createQuadricForFace(size_t indx) const {
     // The quadric for a vertex is the sum of all the quadrics for the adjacent
     // faces Tip: Matrix4x4 has an operator +=
 
-    // P
+    //compute one matrix Kpi from each plane and sum up in createQuadricForVert
+    // P , (outer product)
     glm::vec3 plane = f(indx).normal;
     a = plane[0];
     b = plane[1];
