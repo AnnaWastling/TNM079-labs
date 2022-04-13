@@ -1,4 +1,5 @@
 #include "QuadricDecimationMesh.h"
+#include <VC++/glm/gtx/string_cast.hpp>
 
 const QuadricDecimationMesh::VisualizationMode QuadricDecimationMesh::QuadricIsoSurfaces =
     NewVisualizationMode("Quadric Iso Surfaces");
@@ -40,9 +41,12 @@ void QuadricDecimationMesh::computeCollapse(EdgeCollapse* collapse) {
     size_t v1 = e(collapse->halfEdge).vert;
     size_t v2 = e(e(collapse->halfEdge).next).vert;
 
-    glm::vec4 posV1(v(v1).pos, 1);
-    glm::vec4 posV2(v(v2).pos, 1);
-    glm::vec4 between((posV1 + posV2) / 2.0f);
+    glm::vec4 posV1(v(v1).pos,1.0f);
+    glm::vec4 posV2(v(v2).pos, 1.0f);
+    glm::vec4 between((posV1 + posV2) *0.5f);
+
+
+    //std::cerr << glm::to_string(posV1)  << std::endl;
 
     auto Q1 = createQuadricForVert(v1);
     auto Q2 = createQuadricForVert(v2);
@@ -54,39 +58,35 @@ void QuadricDecimationMesh::computeCollapse(EdgeCollapse* collapse) {
     Qhat[2][3] = 0.0f;
     Qhat[3][3] = 1.0f;
     glm::vec4 zero(0.0f, 0.0f, 0.0f, 1.0f);
-
-    // A square matrix is singular(=invertible) if and only if its determinant is zero.
+    //Qhat = glm::transpose(Qhat);
+    // A square matrix is singular(=invertible) if and only if its determinant is not zero.
     float EPSILON = 0.0000000001f;
+    bool notInvertible = abs(glm::determinant(Qhat)) < EPSILON;
+    float costV1 = glm::dot(posV1, Q * posV1); 
+    float costV2 = glm::dot(posV2, Q * posV2); 
+    float costBetween = glm::dot(between, Q * between); 
 
-    if (glm::determinant(Qhat) != EPSILON) {
+    if (!notInvertible) {
         glm::vec4 v = glm::inverse(Qhat)*zero;
-        collapse->position = v;
-        //error function
-        //multiply transposed vector with vector = dotproduct 
-        float deltaV = glm::dot(v, Qhat * v); 
-        collapse->cost = deltaV;
-
+        collapse->position = glm::vec3(v);
     } 
     else {
         // compare costfunction for other 3 cases
-        float costV1 = glm::dot(posV1, Qhat * posV1);
-        float costV2 = glm::dot(posV2, Qhat * posV2);
-        float costBetween = glm::dot(between, Qhat * between);
-
         //get the one with lowest cost
         if (costV1 < costV2 && costV1 < costBetween) {
             collapse->position = posV1;
-            collapse->cost = costV1; 
         } else if (costV2 < costV1 && costV2 < costBetween) {
             collapse->position = posV2;
-            collapse->cost = costV2; 
         } else {
-            collapse->position = between;
-            collapse->cost = costBetween; 
-        }
+        collapse->position = between;
+       }
 
     }
-
+    glm::vec4 position(collapse->position, 1.0f); 
+    // error function
+    // multiply transposed vector with vector = dotproduct
+    float deltaV = glm::dot(position, Q * position); 
+    collapse->cost = deltaV;
     //std::cerr << "computeCollapse in QuadricDecimationMesh not implemented.\n";
 }
 
@@ -105,7 +105,7 @@ glm::mat4 QuadricDecimationMesh::createQuadricForVert(size_t indx) const {
 
     std::vector<size_t> V_ring = FindNeighborFaces(indx);
 
-    for (auto f_index : V_ring) {
+    for (size_t f_index : V_ring) {
 
       Q += createQuadricForFace(f_index);
     }
@@ -127,18 +127,23 @@ glm::mat4 QuadricDecimationMesh::createQuadricForFace(size_t indx) const {
 
     //compute one matrix Kpi from each plane and sum up in createQuadricForVert
     // P , (outer product)
+    //take the planes that meet at the vertex
+    //planets ekvation
     glm::vec3 plane = f(indx).normal;
     a = plane[0];
     b = plane[1];
     c = plane[2];
-    auto face = f(indx).edge;
-    auto edge = e(face).vert;
-    auto vert = v(edge).pos;
+    size_t face = f(indx).edge;
+    size_t edge = e(face).vert;
+    glm::vec3 vert = v(edge).pos;
 
-    d = -1 * glm::dot(vert, plane);
+    d = -1 * glm::dot(plane,vert);
     //Kpi
-    glm::mat4 K({a*a, a*b, a*c, a*d}, {a*b, b*b, b*c, b*d}, {c*a, c*b, c*c, c*d},
-                {a*d, b*d, c*d, d*d});
+    glm::mat4 K(
+        {a*a, a*b, a*c, a*d},
+        {a*b, b*b, b*c, b*d}, 
+        {c*a, c*b, c*c, c*d},
+        {a*d, b*d, c*d, d*d});
     return K;
 }
 
