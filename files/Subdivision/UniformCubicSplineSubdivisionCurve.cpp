@@ -18,21 +18,18 @@ void UniformCubicSplineSubdivisionCurve::Subdivide() {
     // Implement the subdivision scheme for a natural cubic spline here
      
     // första och sista punkt ska vara samma
-    newc.push_back(mCoefficients[0]);
+    newc.push_back(mCoefficients.front()); //8
 
-    newc.push_back(0.125f * (4.0f * mCoefficients[0] + 4.0f * mCoefficients[1]));
-    for (int i = 0; i < mCoefficients.size() - 2; i++) {
+    for (int i = 1; i < mCoefficients.size() - 1; i++) {
         // 0.125 = 1/8
         // Vill addera flera punkter genom  S (se figur 15)
-        newc.push_back(0.125f * (4.0f * mCoefficients[i+1] + 4.0f * mCoefficients[i + 2]));
-        newc.push_back(0.125f * (1.0f * mCoefficients[i] + 6.0f * mCoefficients[i+1] +
-                                 1.0f * mCoefficients[i + 2]));
+        newc.push_back(0.125f * (1.0f * mCoefficients[i -1] + 6.0f * mCoefficients[i] +
+                                 1.0f * mCoefficients[i + 1]));
+        newc.push_back(0.125f * (4.0f * mCoefficients[i] + 4.0f * mCoefficients[i + 1]));
+
     }
- 
-    // Vill hitta subdivison matrix för mCoEfficent.
-    // matrix S
-    // columns = mCoEfficent.size
-    // rows = newc.size
+    newc.push_back(mCoefficients.back());  // 8
+
     // 
     // If 'mCoefficients' had size N, how large should 'newc' be? Perform a check
     // here!
