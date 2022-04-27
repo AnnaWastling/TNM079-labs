@@ -22,8 +22,8 @@ void UniformCubicSplineSubdivisionCurve::Subdivide() {
 
     for (int i = 1; i < mCoefficients.size() - 1; i++) {
         // 0.125 = 1/8
-        // Vill addera flera punkter genom  S (se figur 15)
-        newc.push_back(0.125f * (1.0f * mCoefficients[i -1] + 6.0f * mCoefficients[i] +
+        // Vill addera flera punkter genom  S (se figur 15) Using the subdivison matrix
+        newc.push_back(0.125f * (1.0f * mCoefficients[i - 1] + 6.0f * mCoefficients[i] +
                                  1.0f * mCoefficients[i + 1]));
         newc.push_back(0.125f * (4.0f * mCoefficients[i] + 4.0f * mCoefficients[i + 1]));
 
