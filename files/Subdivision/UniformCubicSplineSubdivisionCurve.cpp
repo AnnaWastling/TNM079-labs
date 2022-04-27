@@ -28,7 +28,7 @@ void UniformCubicSplineSubdivisionCurve::Subdivide() {
         newc.push_back(0.125f * (4.0f * mCoefficients[i] + 4.0f * mCoefficients[i + 1]));
 
     }
-    newc.push_back(mCoefficients.back());  // 8
+    newc.push_back(mCoefficients.back());  //8
 
     // 
     // If 'mCoefficients' had size N, how large should 'newc' be? Perform a check

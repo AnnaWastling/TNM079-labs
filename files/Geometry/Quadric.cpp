@@ -25,6 +25,7 @@ Quadric::~Quadric() {}
  */
 float Quadric::GetValue(float x, float y, float z) const {
 
+    //World to Object
     TransformW2O(x, y, z);
     glm::vec4 p(x, y, z, 1);
    
@@ -37,6 +38,6 @@ float Quadric::GetValue(float x, float y, float z) const {
 glm::vec3 Quadric::GetGradient(float x, float y, float z) const {
     TransformW2O(x, y, z);
     glm::vec4 p(x, y, z, 1);
-    glm::mat3x4 Qsub = glm::mat3x4(mQuadric); // Might not work like this
+    glm::mat3x4 Qsub = glm::mat3x4(mQuadric); 
     return 2.0f * Qsub*p;
 }

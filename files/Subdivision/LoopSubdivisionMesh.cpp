@@ -129,7 +129,7 @@ glm::vec3 LoopSubdivisionMesh::EdgeRule(size_t edgeIndex) {
     glm::vec3 &v2 = v(e2.vert).pos;
     glm::vec3 &v3 = v(e3.vert).pos;
 
-    return ((v2 + v3) * 0.125f + (v0 + v1) * 0.75f);
+    return ((v2 + v3) * 0.125f + (v0 + v1) * 0.375f);
 }
 
 //! Return weights for interior verts
