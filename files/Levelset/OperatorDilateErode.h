@@ -33,6 +33,7 @@ public:
 
     virtual float ComputeTimestep() {
         // Compute and return a stable timestep
+        // Courant-Friedrichs-Lewy (CFL) stability condition
         float timestep = mLS->GetDx() / (abs(mF));
         return timestep;
     }

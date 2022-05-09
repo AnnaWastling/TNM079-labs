@@ -25,12 +25,12 @@ public:
     virtual float ComputeTimestep() {
         // Compute and return a stable timestep
         // (Hint: Function3D::GetMaxValue())
-        float timestep = mLS->GetDx();
+        float dx = mLS->GetDx();
         glm::vec3 max(mVectorField->GetMaxValue());
         float V = std::max(max.x, max.y); //need the maximum value to get the direction of V
         V = std::max(V, max.z);
-       
-        return timestep/V;
+       //Courant-Friedrichs-Lewy (CFL) stability condition
+        return dx/V;
     }
 
     virtual void Propagate(float time) {
