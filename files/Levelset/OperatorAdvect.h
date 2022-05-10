@@ -54,7 +54,8 @@ public:
         float z = k;
         mLS -> TransformGridToWorld(x, y, z);
         
-
+        // only the sample points up-wind(V>0) or behind (V<0),
+        // to the wave should be used in the discretization (göra diskret)
         // Compute the rate of change (dphi/dt)
         glm::vec3 v = mVectorField->GetValue(x, y, z);
 

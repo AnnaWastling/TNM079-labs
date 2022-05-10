@@ -222,6 +222,14 @@ int LevelSet::GetNarrowBandWidth() {
     return static_cast<int>(width / mDx);
 }
 
+//when the levelset function is properly reinitialized? 
+// when the gradients have the same lenght. 
+//What exactly does reinitialization mean and why is it necessary?
+// (Eikonal equation) gradient size can change so we need reinalisation to make it stable again
+//What is the gradient in the center of an implicit sphere using one - sided difference schemes ?
+// either positive or negative direction of gradient, but if both plus minus you check both infront and behind and it get close to zero. 
+
+
 //! \lab4
 /*! Use the values in the grid (mGrid.GetValue) to compute the differentials */
 // By convention, we use (i,j,k) to represent grid coordinates, while (x,y,z)

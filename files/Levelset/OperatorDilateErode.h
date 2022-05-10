@@ -33,8 +33,9 @@ public:
 
     virtual float ComputeTimestep() {
         // Compute and return a stable timestep
-        // Courant-Friedrichs-Lewy (CFL) stability condition
-        float timestep = mLS->GetDx() / (abs(mF));
+        // Courant-Friedrichs-Lewy (CFL) stability condition (see lectures)
+        float dx = mLS->GetDx();
+        float timestep = dx / (abs(mF));
         return timestep;
     }
 
@@ -53,16 +54,16 @@ public:
             // IntegrateRungeKutta(dt);
         }
     }
-
+    //dilation (advection outwards) or erosion (advection inwards) of the surface, depending on the sign of F(x).
     virtual float Evaluate(size_t i, size_t j, size_t k) {
         // Compute the rate of change (dphi/dt)
         float ddx2;
         float ddy2;
         float ddz2;
+        //the direction of the flow is not known explicitly
         LevelSetOperator::Godunov(i, j, k, mF, ddx2, ddy2, ddz2);
         float rateC = -1 * mF * std::sqrt(ddx2 + ddy2 + ddz2);
         return rateC;
     }
 
-    // void Godunov(size_t i, size_t j, size_t k, float a, float &ddx2, float &ddy2, float &ddz2);
 };
