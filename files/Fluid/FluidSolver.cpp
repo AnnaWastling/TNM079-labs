@@ -152,7 +152,15 @@ void FluidSolver::ExternalForces(float dt) {
                 // update the velocity field (mVelocityField). The simplest possible
                 // integrator is the explicit Euler.
                 // TODO: Add code here
-
+                if (IsFluid) {
+                    FluidSolver::TransformGridToWorld(i, j, k, x, y, z);
+                    //mVelocityField.SetValue(x, y, z, val) = V2
+                    // mVelocityField = V1
+                    // F = ?mFluids?
+                    
+                    float dt = ComputeTimestep();
+                    //euler time integration: V2 = V1 +dt·F
+                }
                 // OBS: DELETE FOLLOWING LINE, IT'S JUST HERE TO SUPPRESS A WARNING FOR UNUSED
                 // VARIABLES
                 x = 1.0f;
