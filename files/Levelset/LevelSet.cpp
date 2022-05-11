@@ -224,8 +224,10 @@ int LevelSet::GetNarrowBandWidth() {
 
 //when the levelset function is properly reinitialized? 
 // when the gradients have the same lenght. 
+
 //What exactly does reinitialization mean and why is it necessary?
 // (Eikonal equation) gradient size can change so we need reinalisation to make it stable again
+
 //What is the gradient in the center of an implicit sphere using one - sided difference schemes ?
 // either positive or negative direction of gradient, but if both plus minus you check both infront and behind and it get close to zero. 
 
@@ -255,7 +257,7 @@ float LevelSet::DiffXpm(size_t i, size_t j, size_t k) const {
     return (mGrid.GetValue(i + 1, j, k) - mGrid.GetValue(i-1, j, k))/ (2*mDx);
 }
 
-//! \lab4:::;;
+//! \lab4
 /*! Use the values in the grid (mGrid.GetValue) to compute the differentials */
 // By convention, we use (i,j,k) to represent grid coordinates, while (x,y,z)
 // represents world coordinates.
@@ -269,7 +271,7 @@ float LevelSet::Diff2Xpm(size_t i, size_t j, size_t k) const {
 // represents world coordinates.
 float LevelSet::DiffYm(size_t i, size_t j, size_t k) const { 
     return (mGrid.GetValue(i, j+1, k) - mGrid.GetValue(i, j-1, k)) / mDx;
-    ;
+    
 }
 
 //! \lab4

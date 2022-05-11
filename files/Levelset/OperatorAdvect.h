@@ -30,7 +30,7 @@ public:
         float V = std::max(max.x, max.y); //need the maximum value to get the direction of V
         V = std::max(V, max.z);
        //Courant-Friedrichs-Lewy (CFL) stability condition
-        return dx/V;
+        return (dx/V)*0.9;
     }
 
     virtual void Propagate(float time) {
@@ -55,6 +55,7 @@ public:
         mLS -> TransformGridToWorld(x, y, z);
         
         // only the sample points up-wind(V>0) or behind (V<0),
+        // t if V travel toward the negative x direction (Vx < 0) we use values from the positive side(phi + x) since these points have been “visited”
         // to the wave should be used in the discretization (göra diskret)
         // Compute the rate of change (dphi/dt)
         glm::vec3 v = mVectorField->GetValue(x, y, z);

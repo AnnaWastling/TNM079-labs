@@ -36,7 +36,7 @@ public:
         // Courant-Friedrichs-Lewy (CFL) stability condition (see lectures)
         float dx = mLS->GetDx();
         float timestep = dx / (abs(mF));
-        return timestep;
+        return timestep *0.9;
     }
 
     virtual void Propagate(float time) {
