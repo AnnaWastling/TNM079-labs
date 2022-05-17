@@ -201,6 +201,7 @@ void FluidSolver::SelfAdvection(float dt, int steps) {
 // Enforce the Dirichlet boundary conditions
 void FluidSolver::EnforceDirichletBoundaryCondition() {
     glm::vec3 v(0.0f, 0.0f, 0.0f); 
+
     for (size_t i = 0; i < mVoxels.GetDimX(); i++) {
         for (size_t j = 0; j < mVoxels.GetDimY(); j++) {
             for (size_t k = 0; k < mVoxels.GetDimZ(); k++) {
@@ -213,16 +214,16 @@ void FluidSolver::EnforceDirichletBoundaryCondition() {
                 if (IsFluid(i, j, k)) {
                     // Get the current velocityvector in the velocityfield
                     v = mVelocityField.GetValue(i, j, k);
-                    if ((IsSolid(i - 1, j, k) && v[0] < 0.0f) || (IsSolid(i + 1, j, k) && v[0] < 0.0f)) {
-                        v[0] = 0;
+                    if ((IsSolid(i - 1, j, k) && v.x < 0.0f) || (IsSolid(i + 1, j, k) && v.x > 0.0f)) {
+                        v.x = 0;
                     }
 
-                    if ((IsSolid(i, j - 1, k) && v[1] < 0.0f) || (IsSolid(i, j + 1, k) && v[1] < 0.0f)) {
-                        v[1] = 0;
+                    if ((IsSolid(i, j - 1, k) && v.y < 0.0f) || (IsSolid(i, j + 1, k) && v.y > 0.0f)) {
+                        v.y = 0;
                     }
 
-                    if ((IsSolid(i, j, k - 1) && v[2] < 0.0f) || (IsSolid(i, j, k + 1) && v[2] < 0.0f)) {
-                        v[2] = 0;
+                    if ((IsSolid(i, j, k - 1) && v.z < 0.0f) || (IsSolid(i, j, k + 1) && v.z > 0.0f)) {
+                        v.z = 0;
                     }
                     mVelocityField.SetValue(i, j, k, v);
                 }
@@ -268,20 +269,12 @@ void FluidSolver::Projection() {
                     // Compute entry for b vector (divergence of the velocity field:
                     // \nabla \dot w_i,j,k)
                     // TODO: Add code here                    
-                      b[ind]  = ((mVelocityField.GetValue(i + 1, j, k).x -
-                         mVelocityField.GetValue(i - 1, j, k).x) /
-                         2.0f * mDx) +
-                        ((mVelocityField.GetValue(i, j + 1, k).y -
-                          mVelocityField.GetValue(i, j - 1, k).y) /
-                         2.0f * mDx) +
-                        ((mVelocityField.GetValue(i, j, k + 1).z -
-                          mVelocityField.GetValue(i, j, k - 1).z) /
-                        2.0f * mDx);
-                        /* b[ind] =(
-                        (ind_ip - ind_im) +
-                        (ind_jp - ind_jm) + 
-                        (ind_kp - ind_km)
-                        ) / 2.0f * mDx;  */                   
+                      b[ind]  = (
+                        mVelocityField.GetValue(i + 1, j, k).x - mVelocityField.GetValue(i - 1, j, k).x +
+                        mVelocityField.GetValue(i, j + 1, k).y - mVelocityField.GetValue(i, j - 1, k).y +
+                        mVelocityField.GetValue(i, j, k + 1).z - mVelocityField.GetValue(i, j, k - 1).z
+                          )/(2.0f * mDx);
+                  
                     // Compute entries for A matrix (discrete Laplacian operator).
                     // The A matrix is a sparse matrix but can be used like a regular
                     // matrix. That is, you access the elements by A(row, column).
@@ -293,10 +286,64 @@ void FluidSolver::Projection() {
                     // a solid (allow no change of flow in that direction).
                     // Remember to treat the boundaries of (i,j,k).
                     // TODO: Add code here
-                   
-                    //if (IsSolid(i,j,k)) {
-                    //      A(ind, ind) = 0;
-                    //} 
+                    
+                    // Using the Poisson equation
+                    //the laplacian describes the exchange of material between the voxel(i,j,k)
+                    //and its neighbors, see figure4 and eq15 & 16. 
+                    float nrSolids = 0;
+
+                      
+                      //if neighbour is solid, set constant in front of voxel to 0 and increase constant
+                      //in front of center element by 1
+                      // Right neigbour
+                      if (IsSolid(i + 1, j, k)) {
+                          A(ind, ind_ip) = 0.0f;
+                          nrSolids++;
+                          //neighbor voxels con-tains water or air we should allow fluid to be exchanged
+                          // between the center voxel(i,j,k)and the neighborvoxel. 
+                          //This is achieved by setting the row element corresponding to the neighbor voxel to 1.
+                      } else {
+                          A(ind, ind_ip) = 1.0f / dx2;
+                      }
+                      //Left neighbour
+                      if (IsSolid(i - 1, j, k)) {
+                          A(ind, ind_im) = 0.0f;
+                          nrSolids++;
+                      } else {
+                          A(ind, ind_im) = 1.0f / dx2;
+                      }
+                      //Uppwards neighbour
+                      if (IsSolid(i, j + 1, k)) {
+                          A(ind, ind_jp) = 0.0f;
+                          nrSolids++;
+                      } else {
+                          A(ind, ind_jp) = 1.0f / dx2;
+                      }
+                      //Downwards neigbour
+                      if (IsSolid(i, j - 1, k)) {
+                          A(ind, ind_jm) = 0.0f;
+                          nrSolids++;
+                      } else {
+                          A(ind, ind_jm) = 1.0f / dx2;
+                      }
+
+                      //Towards neighbour
+                      if (IsSolid(i, j, k + 1)) {
+                          A(ind, ind_kp) = 0.0f;
+                          nrSolids++;
+                      } else {
+                          A(ind, ind_kp) = 1.0f / dx2;
+                      }
+
+                      if (IsSolid(i, j, k - 1)) {
+                          A(ind, ind_km) = 0.0f;
+                          nrSolids++;
+                      } else {
+                          A(ind, ind_km) = 1.0f / dx2;
+                      }
+                      //eq 15 & 22
+                      A(ind, ind) = (-6.0f + nrSolids) / dx2;
+
                 }
             }
         }
@@ -333,17 +380,12 @@ void FluidSolver::Projection() {
                     // and subtract this gradient from the velocity field.
                     // Thereby removing divergence - preserving volume.
                     // TODO: Add code here
- 
-                      gradient[i,j,k] = ((mVelocityField.GetValue(i + 1, j, k).x -
-                               mVelocityField.GetValue(i - 1, j, k).x) /
-                              2.0f * mDx) +
-                             ((mVelocityField.GetValue(i, j + 1, k).y -
-                               mVelocityField.GetValue(i, j - 1, k).y) /
-                              2.0f * mDx) +
-                             ((mVelocityField.GetValue(i, j, k + 1).z -
-                               mVelocityField.GetValue(i, j, k - 1).z) /
-                              2.0f * mDx);  
-
+                    //Eq 13, where u,v and w are the x, y and z components of the vector X
+                    glm::vec3 gradient = {0.0f, 0.0f, 0.0f};
+                    gradient.x = (x[ind_ip] - x[ind_im]) / (2.0f * mDx);
+                    gradient.y = (x[ind_jp] - x[ind_jm]) / (2.0f * mDx);
+                    gradient.z = (x[ind_kp] - x[ind_km]) / (2.0f * mDx);
+                      
                      res = mVelocityField.GetValue(i, j, k) - gradient;
                       mVelocityField.SetValue(i, j, k, res); 
                 }
