@@ -155,9 +155,8 @@ void FluidSolver::ExternalForces(float dt) {
                 if (IsFluid(i, j, k)) {
                     FluidSolver::TransformGridToWorld(i, j, k, x, y, z);
                     glm::vec3 f = mExternalForces->GetValue(x, y, z);
-                    float dt = ComputeTimestep();
-                    glm::vec3 result = mVelocityField.GetValue(x, y, z) + dt * f;
-                    mVelocityField.SetValue(x, y, z, result);
+                    glm::vec3 result = mVelocityField.GetValue(i, j, k) + dt * f;
+                    mVelocityField.SetValue(i, j, k, result);
 
                     //euler time integration: V2 = V1 +dt·F
                 }
@@ -290,7 +289,7 @@ void FluidSolver::Projection() {
                     // Using the Poisson equation
                     //the laplacian describes the exchange of material between the voxel(i,j,k)
                     //and its neighbors, see figure4 and eq15 & 16. 
-                    float nrSolids = 0;
+                    int nrSolids = 0;
 
                       
                       //if neighbour is solid, set constant in front of voxel to 0 and increase constant
@@ -334,7 +333,7 @@ void FluidSolver::Projection() {
                       } else {
                           A(ind, ind_kp) = 1.0f / dx2;
                       }
-
+                      //away from neighbour
                       if (IsSolid(i, j, k - 1)) {
                           A(ind, ind_km) = 0.0f;
                           nrSolids++;
@@ -342,7 +341,7 @@ void FluidSolver::Projection() {
                           A(ind, ind_km) = 1.0f / dx2;
                       }
                       //eq 15 & 22
-                      A(ind, ind) = (-6.0f + nrSolids) / dx2;
+                      A(ind, ind) = (-6.0f + (float)nrSolids)/ dx2;
 
                 }
             }
@@ -381,7 +380,7 @@ void FluidSolver::Projection() {
                     // Thereby removing divergence - preserving volume.
                     // TODO: Add code here
                     //Eq 13, where u,v and w are the x, y and z components of the vector X
-                    glm::vec3 gradient = {0.0f, 0.0f, 0.0f};
+                    
                     gradient.x = (x[ind_ip] - x[ind_im]) / (2.0f * mDx);
                     gradient.y = (x[ind_jp] - x[ind_jm]) / (2.0f * mDx);
                     gradient.z = (x[ind_kp] - x[ind_km]) / (2.0f * mDx);

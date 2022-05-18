@@ -26,7 +26,7 @@ public:
         // Compute and return a stable timestep
         // (Hint: Function3D::GetMaxValue())
         float dx = mLS->GetDx();
-        glm::vec3 max(mVectorField->GetMaxValue());
+        glm::vec3 max(glm::abs(mVectorField->GetMaxValue()));
         float V = std::max(max.x, max.y); //need the maximum value to get the direction of V
         V = std::max(V, max.z);
        //Courant-Friedrichs-Lewy (CFL) stability condition
@@ -84,6 +84,7 @@ public:
         // the velocity field used for advection needs to be sampled in
         // world coordinates (x,y,z). You can use LevelSet::TransformGridToWorld()
         // for this task.
-        return glm::dot(-v, gradient);
+        
+        return -glm::dot(v, gradient);
     }
 };
